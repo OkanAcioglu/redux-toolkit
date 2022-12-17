@@ -22,6 +22,8 @@ npx create-react-app@latest my-app --template redux
 npm install @reduxjs/toolkit react-redux
 ```
 
+Redux Toolkit can be used with any frontend framework and in order to connect our application to the Redux, react-redux is what we will use...
+
 #### @reduxjs/toolkit
 
 consists of few libraries
