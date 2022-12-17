@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+import cartItems from '../../cartItems'
 //! Think of slice as feature of the application
 //! When we look at final of the project we got cart feature and there is modal feature so we have 1 feature for the modal and 1 feature for the cart and in redux toolkit these are named as slice...
 //! Common convention is to setup features folder
 
 const initialState = {
-  cartItems: [],
-  amount: 0,
+  cartItems: cartItems,
+  amount: 4,
   total: 0,
   isLoading: true,
 }
