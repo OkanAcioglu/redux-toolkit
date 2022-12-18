@@ -262,6 +262,10 @@ export default CartItem
 
 #### First Reducer
 
+Previously we need to setup action, we need to dispatch and then we need to return a new state then just copy the values and all that...
+This is not the case in Redux-Toolkit
+Way we do that simply go with reducers property in the slice and key-value pair
+
 - cartSlice.js
 - Immer library
 
@@ -275,7 +279,8 @@ const cartSlice = createSlice({
     },
   },
 })
-
+//! In the cartSlice we have a actions.
+//! Moment we create reducers we able to see the action created by the name of clearCard and we export it.
 export const { clearCart } = cartSlice.actions
 ```
 
@@ -294,6 +299,7 @@ const actionCreator = (payload) => {
 ```js
 import React from 'react'
 import CartItem from './CartItem'
+//! In order to invoke clearCart we will use useDispatch hook.
 import { useDispatch, useSelector } from 'react-redux'
 
 const CartContainer = () => {

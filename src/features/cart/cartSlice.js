@@ -14,10 +14,18 @@ const initialState = {
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
+  reducers: {
+    clearCart: (state) => {
+      //! We call it clearCart and as a parameter this function gets a state and note that we do not have to return anythink
+      //! Immer Library behind the scenes does all the heavy lifting
+      //! Here we can modify (mutuate) the state directly
+      state.cartItems = []
+    },
+  },
 })
 
 //! In the console there is a cartSlice object appeared and it got a property called "reducer" which will control the state.
 //! That is why we wanna export it...
 //console.log(cartSlice)
-
+export const { clearCart } = cartSlice.actions
 export default cartSlice.reducer
