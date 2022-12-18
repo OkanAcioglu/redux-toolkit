@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { act } from 'react-dom/test-utils'
 import cartItems from '../../cartItems'
 //! Think of slice as feature of the application
 //! When we look at final of the project we got cart feature and there is modal feature so we have 1 feature for the modal and 1 feature for the cart and in redux toolkit these are named as slice...
@@ -26,6 +27,11 @@ const cartSlice = createSlice({
       // return {} --> our state turn into empty array
       // return {cartItems: []} --> cartItems will be empty but other state values also be gone...
     },
+    removeItem: (state, action) => {
+      console.log(action)
+      const itemId = action.payload
+      state.cartItems = state.cartItems.filter((item) => item.id !== itemId)
+    },
   },
 })
 
@@ -33,5 +39,5 @@ const cartSlice = createSlice({
 //! That is why we wanna export it...
 console.log(cartSlice)
 
-export const { clearCart } = cartSlice.actions
+export const { clearCart, removeItem } = cartSlice.actions
 export default cartSlice.reducer
