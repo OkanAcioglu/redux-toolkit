@@ -1,17 +1,33 @@
 import Navbar from './components/Navbar'
 import CartContainer from './components/CartContainer'
 import { useEffect } from 'react'
-import { calculateTotals } from './features/cart/cartSlice'
+//? At the last grab the getCartItems
+import { calculateTotals, getCartItems } from './features/cart/cartSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import Modal from './components/Modal'
 function App() {
-  const { cartItems } = useSelector((state) => state.cart)
+  //! grab the isLoading
+  const { cartItems, isLoading } = useSelector((state) => state.cart)
   const { isOpen } = useSelector((state) => state.modal)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(calculateTotals())
   }, [cartItems])
+
+  useEffect(() => {
+    //? dispatch getCartItems
+    dispatch(getCartItems())
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className='loading'>
+        <h1>Loading...</h1>
+      </div>
+    )
+  }
+
   return (
     <main>
       {isOpen && <Modal />}

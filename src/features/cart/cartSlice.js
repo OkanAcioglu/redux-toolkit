@@ -1,16 +1,31 @@
-import { createSlice } from '@reduxjs/toolkit'
+//? We cannot simply setup in our current reducers for async actions
+//? We will use createAsyncThunk to handle async functionality
+//? grab the createAsyncThunk
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { act } from 'react-dom/test-utils'
 import cartItems from '../../cartItems'
 //! Think of slice as feature of the application
 //! When we look at final of the project we got cart feature and there is modal feature so we have 1 feature for the modal and 1 feature for the cart and in redux toolkit these are named as slice...
 //! Common convention is to setup features folder
 
+const url = 'https://course-api.com/react-useReducer-cart-project'
+
 const initialState = {
-  cartItems: cartItems,
+  cartItems: [],
   amount: 4,
   total: 0,
   isLoading: true,
 }
+
+//? Below we will invoke and we want to export result directly.
+//? createAsyncThunk looking two things...
+//? 1) action type --> name of our action
+//? 2) callback --> function need to be return promise
+export const getCartItems = createAsyncThunk('cart/getCartItems', () => {
+  return fetch(url)
+    .then((resp) => resp.json())
+    .catch((error) => console.log(error))
+})
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -52,6 +67,27 @@ const cartSlice = createSlice({
       state.amount = amount
       state.total = total
     },
+  },
+  extraReducers: (builder) => {
+    //? Callback return lifecycle actions
+    //? We will create extraReducers with using builder callback notation.
+    //? In each addCase we will reach the lifecycle actions.
+    builder
+      .addCase(getCartItems.pending, (state) => {
+        //? what we wanna do in pending
+        state.isLoading = true
+      })
+      .addCase(getCartItems.fulfilled, (state, action) => {
+        //? What we wanna do with data that we return in case of success in this case response of JSON
+        //? What is in the action ? It is a payload and that is the data that we are getting back.
+        //console.log(action)
+        state.isLoading = false
+        state.cartItems = action.payload
+      })
+      .addCase(getCartItems.rejected, (state) => {
+        //? In case of rejected what we wanna do
+        state.isLoading = false
+      })
   },
 })
 
