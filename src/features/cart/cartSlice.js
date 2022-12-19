@@ -70,7 +70,7 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     //? Callback return lifecycle actions
-    //? We will create extraReducers with using builder callback notation.
+    //? We will create extraReducers with using builder callback notation...
     //? In each addCase we will reach the lifecycle actions.
     builder
       .addCase(getCartItems.pending, (state) => {
