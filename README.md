@@ -681,6 +681,15 @@ npm install axios
 - cartSlice.js
 
 ```js
+//! We can create the function with async..
+//! We can pass argument inside async(name) and with that we can pass smth. from component and we can access it in our async...
+// first parameter --> console.log(name) // random
+useEffect(() => {
+  dispatch(getCartItems('random'))
+}, [])
+//! We can access to thunkAPI --> second parameter named can be different but as a common convention it is named as thunkAPI --> async(name,thunkAPI)
+//! in thunkAPI --> we can get the state of the entire application --> with getState()
+//! in thunkAPI --> we can dispatch --> for example we can open modal while we are fetching...
 export const getCartItems = createAsyncThunk(
   'cart/getCartItems',
   async (name, thunkAPI) => {
@@ -690,7 +699,6 @@ export const getCartItems = createAsyncThunk(
       // console.log(thunkAPI.getState());
       // thunkAPI.dispatch(openModal());
       const resp = await axios(url)
-
       return resp.data
     } catch (error) {
       return thunkAPI.rejectWithValue('something went wrong')
